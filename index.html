@@ -89,15 +89,16 @@ dialog.err{animation:shake .5s}
 <section id="setup" class="setup">
   <div class="logo">🏰🌊🌳</div>
   <h1>Defensores do Reino Ecológico</h1>
-  <p>Floralia e Aetheria brigaram e o rio ficou sujo. Atravesse, limpe e traga a paz de volta!</p>
+  <p>Floralia e Aetheria brigaram e o rio ficou sujo. Invada o castelo rival, limpe o rio e traga a paz de volta!</p>
   <b>Quantos jogadores?</b>
   <div class="num"><button data-n="2" onclick="pick(2)">2</button><button data-n="3" onclick="pick(3)">3</button><button data-n="4" onclick="pick(4)">4</button></div>
   <div id="who"></div>
   <ol class="how">
+    <li>Cada jogador sai do seu castelo, em lados opostos do rio: Floralia embaixo, Aetheria em cima.</li>
     <li>Na sua vez, responda uma pergunta em inglês.</li>
     <li>Acertou? Escolha: <b>andar</b>, <b>poluir</b> o reino de um rival ou <b>limpar</b> o seu.</li>
     <li>Cada 🗑️ no seu reino tira 1 casa do dado.</li>
-    <li>Chegue ao castelo do adversário (Aetheria) com pelo menos 2 espaços limpos e grite <b>CLEAN UP!</b></li>
+    <li>Invada o castelo do outro lado, com pelo menos 2 espaços limpos no seu reino, e grite <b>CLEAN UP!</b></li>
   </ol>
   <button class="big" onclick="start()">Começar</button>
 </section>
@@ -109,7 +110,7 @@ dialog.err{animation:shake .5s}
   <div class="turn" id="turn"></div>
   <button class="big" id="bPlay" onclick="play()">❓ Responder pergunta</button>
   <div id="hand"></div>
-  <p class="leg">Pedras: 🍃 ganha carta bônus · ☁️ põe 1 🗑️ no seu reino. Com 5 🗑️ você não anda: só pode limpar.</p>
+  <p class="leg">As pedras são numeradas a partir de Floralia. 🍃 ganha carta bônus · ☁️ põe 1 🗑️ no seu reino. Com 5 🗑️ você não anda: só pode limpar.</p>
 </section>
 <dialog id="dq"></dialog>
 <div id="dice" class="hide"><div class="dbox"><div id="die">🎲</div><div id="dt"></div></div></div>
@@ -170,7 +171,10 @@ const BAD=[["Vazamento de óleo: volta 3 casas","oil"],["Desmatamento: perde a p
 const SP={6:"b",13:"b",21:"b",27:"b",9:"t",17:"t",24:"t"},W=360,H=500;
 const raw=t=>({x:180+125*Math.sin(t*Math.PI*3),y:405-t*300}),LUT=(()=>{let a=[],L=0,p=raw(0);for(let k=0;k<=600;k++){const q=raw(k/600);L+=Math.hypot(q.x-p.x,q.y-p.y);a.push([L,k/600]);p=q}return a})();
 const pt=t=>{const T=t*LUT[600][0];let lo=0,hi=600;while(hi-lo>1){const m=(lo+hi)>>1;if(LUT[m][0]<T)lo=m;else hi=m}const[a,ta]=LUT[lo],[b,tb]=LUT[hi];return raw(ta+(tb-ta)*((T-a)/((b-a)||1)))};
-const cell=n=>n==0?{x:180,y:438}:pt((n-1)/29);
+const HOME=[{x:180,y:438},{x:180,y:67}],SIDE=["Floralia","Aetheria"];
+const stone=(i,pos)=>i%2?31-pos:pos;
+const cell=n=>pt((n-1)/29);
+const spot=(i,pos)=>pos==0?HOME[i%2]:cell(stone(i,pos));
 let S,N=2,last=-1;
 function pick(n){N=n;document.querySelectorAll(".num button").forEach(b=>b.classList.toggle("sel",+b.dataset.n==n));$("who").innerHTML=P.slice(0,n).map(p=>`<span style="--c:${p.c}">${p.e} ${p.n}</span>`).join("")}
 function home(){$("game").classList.add("hide");$("setup").classList.remove("hide")}
@@ -181,15 +185,15 @@ function start(){
  let st="";for(let n=1;n<=30;n++){const c=cell(n),s=SP[n];st+=`<circle cx="${c.x}" cy="${c.y}" r="12.5" fill="${n==30?"#ffd34d":s=="b"?"#8fe36a":s=="t"?"#9a9aa6":"#f6f1e2"}" stroke="#0003"/><text x="${c.x}" y="${c.y+4}" text-anchor="middle" font-size="${s?11:9}" font-weight="700" fill="#10271f">${s=="b"?"🍃":s=="t"?"☁️":n}</text>`}
  let tr="";for(let k=0;k<7;k++)tr+=`<text x="${k%2?340:20}" y="${150+k*38}" font-size="24" text-anchor="middle">🌲</text>`;
  const ban=(x,y,w,c,t)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="22" rx="11" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y+16}" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">${t}</text>`;
- $("bd").innerHTML=`<svg viewBox="0 0 ${W} ${H}"><ellipse cx="180" cy="10" rx="250" ry="112" fill="#b5e3f6"/><ellipse cx="180" cy="505" rx="250" ry="92" fill="#83cb5e"/>${tr}<path d="${d}" fill="none" stroke="#d9c79a" stroke-width="42" stroke-linejoin="round" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#1d8fa8" stroke-width="33" stroke-linejoin="round" stroke-linecap="round"/><path id="dirty" d="${d}" fill="none" stroke="#15151a" stroke-width="33" stroke-linejoin="round" stroke-linecap="round" opacity="0"/><path class="flow" d="${d}" fill="none" stroke="#fff7" stroke-width="2" stroke-dasharray="6 12"/><circle cx="180" cy="438" r="17" fill="#f6f1e2" stroke="#0003"/>${st}`+
-  `<text x="60" y="62" font-size="26">☁️</text><text x="300" y="56" font-size="26">☁️</text><text x="296" y="86" font-size="20">💧</text><text id="castle" x="180" y="82" text-anchor="middle" font-size="46">🏰</text>${ban(180,12,120,"#1d7fb8","AETHERIA")}`+
-  `<text x="104" y="468" text-anchor="middle" font-size="46">🏰</text>${ban(104,474,104,"#3f8a2a","FLORALIA")}<text x="256" y="470" font-size="26">🌳</text><text x="296" y="482" font-size="22">⛺</text></svg>`+
+ $("bd").innerHTML=`<svg viewBox="0 0 ${W} ${H}"><ellipse cx="180" cy="10" rx="250" ry="112" fill="#b5e3f6"/><ellipse cx="180" cy="505" rx="250" ry="92" fill="#83cb5e"/>${tr}<path d="${d}" fill="none" stroke="#d9c79a" stroke-width="42" stroke-linejoin="round" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#1d8fa8" stroke-width="33" stroke-linejoin="round" stroke-linecap="round"/><path id="dirty" d="${d}" fill="none" stroke="#15151a" stroke-width="33" stroke-linejoin="round" stroke-linecap="round" opacity="0"/><path class="flow" d="${d}" fill="none" stroke="#fff7" stroke-width="2" stroke-dasharray="6 12"/><circle cx="180" cy="438" r="17" fill="#e4f4d6" stroke="#0003"/><circle cx="180" cy="67" r="17" fill="#e3f3f8" stroke="#0003"/>${st}`+
+  `<text x="62" y="62" font-size="26">☁️</text><text x="118" y="92" font-size="20">💧</text><text id="castle" x="274" y="70" text-anchor="middle" font-size="46">🏰</text>${ban(274,14,104,"#1d7fb8","AETHERIA")}`+
+  `<text id="castle2" x="104" y="468" text-anchor="middle" font-size="46">🏰</text>${ban(104,474,104,"#3f8a2a","FLORALIA")}<text x="256" y="470" font-size="26">🌳</text><text x="296" y="482" font-size="22">⛺</text></svg>`+
   S.pl.map((_,i)=>`<div class="tk" id="tk${i}" style="--c:${P[i].c}"><u></u><i></i><span>${P[i].e}</span><b>${P[i].n}</b></div>`).join("");
  S.pl.forEach((_,i)=>place(i));
  $("ps").style.gridTemplateColumns=`repeat(${N==4?2:N},1fr)`;
- msg("Bom jogo! Aperte <b>Responder pergunta</b> para começar.");ui();
+ msg(`Cada um sai do seu reino e vai invadir o do outro. ${S.pl.map((_,i)=>P[i].n+" ("+SIDE[i%2]+")").join(", ")}. Aperte <b>Responder pergunta</b>!`);ui();
 }
-function place(i){const c=cell(S.pl[i].pos),e=$("tk"+i);e.style.left=c.x/W*100+"%";e.style.top=c.y/H*100+"%";e.style.translate=`${i%2?11:-11}px ${i>1?7:-3}px`}
+function place(i){const c=spot(i,S.pl[i].pos),e=$("tk"+i);e.style.left=c.x/W*100+"%";e.style.top=c.y/H*100+"%";e.style.translate=`${i>1?11:-11}px -3px`}
 function hopfx(i){const e=$("tk"+i);e.classList.remove("hop");void e.offsetWidth;e.classList.add("hop")}
 async function move(i,to){const p=S.pl[i];to=Math.max(0,Math.min(30,to));while(p.pos!=to){p.pos+=p.pos<to?1:-1;place(i);hopfx(i);await sleep(160)}}
 function msg(h){const l=$("log");l.innerHTML=h;l.style.animation="none";void l.offsetWidth;l.style.animation=""}
@@ -197,13 +201,13 @@ function flash(i){const e=$("pc"+i);if(!e)return;e.classList.remove("hit");void 
 function ui(){
  const me=S.pl[S.t],p=P[S.t],dis=S.busy||S.over;
  document.documentElement.style.setProperty("--c",p.c);
- $("ps").innerHTML=S.pl.map((s,i)=>`<div class="pc ${i==S.t?"on":""}" id="pc${i}" style="--c:${P[i].c}"><div class="hd"><span class="av">${P[i].e}</span><div><b>${P[i].n}</b><small>casa ${s.pos}${s.shield?" 🛡️":""}${s.cards.length?" · 🎴"+s.cards.length:""}</small></div></div><small>Reino de ${P[i].n}</small><div class="sl">${[0,1,2,3,4].map(k=>`<i class="${k<s.poll?"p":""}">${k<s.poll?"🗑️":"🌱"}</i>`).join("")}</div>${"❤️".repeat(s.lives)}${"🖤".repeat(3-s.lives)}</div>`).join("");
+ $("ps").innerHTML=S.pl.map((s,i)=>`<div class="pc ${i==S.t?"on":""}" id="pc${i}" style="--c:${P[i].c}"><div class="hd"><span class="av">${P[i].e}</span><div><b>${P[i].n}</b><small>${SIDE[i%2]} · casa ${s.pos}${s.shield?" 🛡️":""}${s.cards.length?" · 🎴"+s.cards.length:""}</small></div></div><small>Reino de ${P[i].n}</small><div class="sl">${[0,1,2,3,4].map(k=>`<i class="${k<s.poll?"p":""}">${k<s.poll?"🗑️":"🌱"}</i>`).join("")}</div>${"❤️".repeat(s.lives)}${"🖤".repeat(3-s.lives)}</div>`).join("");
  $("turn").innerHTML=`${p.e} Vez de <b>${p.n}</b><small>Acertando, você escolhe: andar, poluir um rival ou limpar seu reino.${me.poll?` Seu reino tem ${me.poll} 🗑️: o dado anda ${me.poll} a menos.`:""}</small>`;
  $("bPlay").disabled=dis;
  $("hand").innerHTML=me.cards.length?"🎴 "+me.cards.map((c,k)=>`<button ${dis?"disabled":""} onclick="useCard(${k})">${BON[c][0]}</button>`).join(""):"<small style='color:var(--mut)'>Sem cartas. Acerte perguntas para ganhar.</small>";
  const tot=Math.min(1,S.pl.reduce((a,s)=>a+s.poll,0)/(N*5)*1.7).toFixed(2);
  const dr=$("dirty");if(dr)dr.setAttribute("opacity",tot);
- const ca=$("castle");if(ca)ca.style.filter=`grayscale(${tot})`;
+ ["castle","castle2"].forEach(k=>{const e=$(k);if(e)e.style.filter=`grayscale(${tot})`});
  S.pl.forEach((_,i)=>$("tk"+i).classList.toggle("act",i==S.t));
 }
 async function roll(poll){
@@ -239,7 +243,7 @@ async function bad(i,k){const p=S.pl[i];
  if(k=="def")p.skip=true;
  if(k=="storm")await Promise.all(S.pl.map((s,j)=>move(j,s.pos-1)));
  if(k=="tox"){p.poll=Math.min(5,p.poll+1);hurt(i)}}
-async function land(i){const p=S.pl[i],s=SP[p.pos];
+async function land(i){const p=S.pl[i],s=SP[stone(i,p.pos)];
  if(s=="b")msg("🍃 Pedra bônus! "+gain(i));
  if(s=="t"){p.poll=Math.min(5,p.poll+1);msg("☁️ Pedra de fumaça! Seu reino ganhou 1 🗑️.");ui();flash(i)}
  if(s){ui();await sleep(900)}}
@@ -271,7 +275,7 @@ function win(i){
  const p=S.pl[i];if(p.pos<30||p.poll>3||S.over)return false;
  S.over=true;ui();confetti();
  const d=$("dq");d.className="";d.style.setProperty("--c",P[i].c);
- d.innerHTML=`<span class="cat">${P[i].e} ${P[i].n} venceu!</span><p><b>CLEAN UP!</b> O castelo foi despoluído e a maldição acabou. Water and Forest were never enemies. They were family.</p><button class="big" onclick="$('dq').close();start()">Jogar de novo</button>`;
+ d.innerHTML=`<span class="cat">${P[i].e} ${P[i].n} venceu!</span><p><b>CLEAN UP!</b> ${P[i].n} invadiu o castelo de ${SIDE[1-i%2]} e despoluiu o reino. Water and Forest were never enemies. They were family.</p><button class="big" onclick="$('dq').close();start()">Jogar de novo</button>`;
  d.oncancel=null;d.showModal();return true}
 function next(m){
  if(win(S.t))return;
