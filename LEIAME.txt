@@ -1,0 +1,8 @@
+Defensores do Reino Ecologico - jogo online
+
+Como publicar:
+1. Suba esta pasta inteira (o arquivo index.html precisa ficar na raiz) em um servico de hospedagem estatica, como Netlify, Vercel, GitHub Pages ou Cloudflare Pages.
+2. Abra o endereco que o servico gerar e teste no celular.
+3. Gere o QR Code a partir desse endereco.
+
+O jogo e um unico arquivo (index.html). Nao precisa instalar nada. So a fonte do titulo vem do Google Fonts, entao precisa de internet para ficar igual.

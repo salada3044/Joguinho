@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Defensores do Reino Ecológico</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#dcebe3;--g1:#bfe6f5;--card:#f9fcfa;--ink:#10271f;--mut:#58706a;--line:#bcd2c7;--c:#1d8fa8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1914;--g1:#10303a;--card:#16261f;--ink:#e8f2ed;--mut:#93aaa1;--line:#2a4237}}
+:root[data-theme="dark"]{--bg:#0d1914;--g1:#10303a;--card:#16261f;--ink:#e8f2ed;--mut:#93aaa1;--line:#2a4237}
+*,*:before,*:after{box-sizing:inherit}
+html,body{margin:0}
+body{background:linear-gradient(var(--g1),var(--bg) 320px) no-repeat var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;line-height:1.25;font-weight:500;min-height:100vh}
+main{max-width:520px;margin:0 auto;padding:10px 10px 30px}
+button{font:inherit;cursor:pointer;border:0}
+button:focus-visible{outline:3px solid #e8762c;outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+h1{font-size:2rem;font-weight:800;line-height:1;margin:8px 0}
+.hide{display:none!important}
+.setup{text-align:center;padding-top:14px}
+.setup p{color:var(--mut);margin:6px 0 14px}
+.logo{font-size:3.4rem;line-height:1;animation:bob 2s ease-in-out infinite}
+.num{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.num button{width:68px;height:68px;border-radius:22px;font-size:1.9rem;font-weight:800;background:var(--card);color:var(--ink);border:3px solid var(--line);transition:transform .2s}
+.num button.sel{background:#1d8fa8;color:#fff;border-color:#1d8fa8;transform:scale(1.12) rotate(-3deg)}
+#who{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}
+#who span{background:var(--c);color:#fff;border-radius:16px;padding:6px 14px;font-size:1.05rem;animation:pop .4s backwards}
+.how{background:var(--card);border-radius:18px;padding:12px 16px 12px 32px;text-align:left;margin:10px 0 16px}
+.how li{margin:5px 0}
+.big{width:100%;background:#e8762c;color:#fff;border-radius:18px;padding:12px;font-size:1.3rem;font-weight:800;box-shadow:0 5px 0 #a9500f}
+.big:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #a9500f}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top button{background:var(--card);color:var(--ink);border-radius:12px;padding:4px 12px}
+.ps{display:grid;gap:6px;margin:6px 0}
+.pc{background:var(--card);border-radius:14px;padding:6px 8px;border:3px solid transparent;transition:all .3s;font-size:.9rem;min-width:0}
+.pc.on{border-color:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent);transform:translateY(-2px)}
+.pc.hit{animation:shake .5s}
+.hd{display:flex;gap:6px;align-items:center}
+.av{width:30px;height:30px;border-radius:50%;background:var(--c);display:grid;place-items:center;border:2px solid #fff;box-shadow:0 2px 4px #0004;flex:none}
+.hd b{color:var(--c);display:block;line-height:1}
+.pc small{color:var(--mut)}
+.sl{display:flex;gap:3px;margin:3px 0}
+.sl i{flex:1;min-width:0;aspect-ratio:1;max-height:30px;border-radius:8px;background:#cfe8c0;display:grid;place-items:center;font-style:normal;font-size:.8rem;transition:all .3s}
+.sl i.p{background:#2b2b30;transform:scale(1.08) rotate(-5deg)}
+.bd{position:relative;aspect-ratio:360/500;border-radius:22px;overflow:hidden;background:linear-gradient(#8fd0ea 0 22%,#5aa846 22% 100%);border:7px solid #8a5a2b;box-shadow:0 0 0 3px #5e3a17,0 8px 0 #4a2d10}
+.bd svg{position:absolute;inset:0;width:100%;height:100%}
+.flow{animation:dash 1.2s linear infinite}
+.tk{position:absolute;width:40px;height:52px;margin:-46px 0 0 -20px;transition:left .15s,top .15s;z-index:3;pointer-events:none}
+.tk u{position:absolute;left:4px;bottom:-3px;width:32px;height:10px;border-radius:50%;background:#0006}
+.tk i{position:absolute;left:8px;bottom:0;width:24px;height:26px;background:var(--c);filter:brightness(.8);clip-path:polygon(28% 0,72% 0,100% 100%,0 100%)}
+.tk span{position:absolute;left:3px;top:2px;width:34px;height:34px;border-radius:50%;background:var(--c);border:3px solid #fff;display:grid;place-items:center;font-size:18px;box-shadow:0 3px 5px #0005}
+.tk b{display:none;position:absolute;left:50%;top:-18px;transform:translateX(-50%);background:#fff;color:var(--c);font-size:11px;padding:0 8px;border-radius:9px;white-space:nowrap;box-shadow:0 2px 4px #0004}
+.tk.act{z-index:5}.tk.act b{display:block;animation:bob 1s ease-in-out infinite}
+.tk.hop span{animation:hop .15s}
+#log{background:var(--card);border-radius:14px;padding:9px 12px;margin:10px 0 6px;border-left:6px solid var(--c);min-height:46px;animation:pop .3s}
+.turn{font-size:1.15rem;margin:6px 2px 8px}.turn b{color:var(--c)}.turn small{display:block;color:var(--mut);font-size:.82rem;line-height:1.15}
+#bPlay{background:var(--c);box-shadow:0 5px 0 color-mix(in srgb,var(--c) 60%,#000)}
+#hand{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+#hand button{background:var(--card);color:var(--ink);border:2px solid var(--c);border-radius:12px;padding:3px 10px;animation:pop .3s}
+.leg{color:var(--mut);font-size:.82rem;margin-top:12px}
+dialog{border:0;border-radius:22px;padding:16px;width:min(92vw,430px);background:var(--card);color:var(--ink);animation:pop .25s}
+dialog::backdrop{background:#000a}
+.cat{display:inline-block;color:#fff;background:var(--c);border-radius:99px;padding:1px 12px;font-weight:700}
+dialog p{font-size:1.25rem;margin:8px 0 10px;line-height:1.2}
+.opt{display:block;width:100%;text-align:left;margin:7px 0;padding:11px 14px;border-radius:14px;background:var(--bg);color:var(--ink);border:3px solid var(--line);font-size:1.05rem}
+.opt.ok{background:#4f9a2f;color:#fff;border-color:#4f9a2f;animation:pop .4s}
+.opt.no{background:#c0392b;color:#fff;border-color:#c0392b}
+.rw{display:grid;grid-template-columns:48px 1fr;column-gap:8px;border-color:var(--c)}
+.rw em{grid-row:span 2;font-size:2rem;font-style:normal;align-self:center}
+.rw small{color:var(--mut);line-height:1.1}
+dialog.err{animation:shake .5s}
+#dice{position:fixed;inset:0;display:grid;place-items:center;background:#0007;z-index:20}
+.dbox{text-align:center;color:#fff;font-size:1.3rem}
+#die{font-size:90px;width:150px;height:150px;margin:0 auto 10px;border-radius:32px;background:var(--card);color:var(--ink);display:grid;place-items:center;animation:spin .4s linear infinite}
+#die.rest{animation:pop .4s}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:30}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes bob{50%{transform:translateY(-4px) scale(1.06)}}
+@keyframes hop{50%{transform:translateY(-14px) scale(1.2)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dash{to{stroke-dashoffset:-36}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main>
+<section id="setup" class="setup">
+  <div class="logo">🏰🌊🌳</div>
+  <h1>Defensores do Reino Ecológico</h1>
+  <p>Floralia e Aetheria brigaram e o rio ficou sujo. Atravesse, limpe e traga a paz de volta!</p>
+  <b>Quantos jogadores?</b>
+  <div class="num"><button data-n="2" onclick="pick(2)">2</button><button data-n="3" onclick="pick(3)">3</button><button data-n="4" onclick="pick(4)">4</button></div>
+  <div id="who"></div>
+  <ol class="how">
+    <li>Na sua vez, responda uma pergunta em inglês.</li>
+    <li>Acertou? Escolha: <b>andar</b>, <b>poluir</b> o reino de um rival ou <b>limpar</b> o seu.</li>
+    <li>Cada 🗑️ no seu reino tira 1 casa do dado.</li>
+    <li>Chegue ao castelo do adversário (Aetheria) com pelo menos 2 espaços limpos e grite <b>CLEAN UP!</b></li>
+  </ol>
+  <button class="big" onclick="start()">Começar</button>
+</section>
+<section id="game" class="hide">
+  <div class="top"><h1 style="font-size:1.25rem;margin:0">🏰 Reino Ecológico</h1><button onclick="home()">Novo jogo</button></div>
+  <div class="ps" id="ps"></div>
+  <div class="bd" id="bd"></div>
+  <div id="log"></div>
+  <div class="turn" id="turn"></div>
+  <button class="big" id="bPlay" onclick="play()">❓ Responder pergunta</button>
+  <div id="hand"></div>
+  <p class="leg">Pedras: 🍃 ganha carta bônus · ☁️ põe 1 🗑️ no seu reino. Com 5 🗑️ você não anda: só pode limpar.</p>
+</section>
+<dialog id="dq"></dialog>
+<div id="dice" class="hide"><div class="dbox"><div id="die">🎲</div><div id="dt"></div></div></div>
+<canvas id="cf" class="hide"></canvas>
+</main>
+<script>
+const $=id=>document.getElementById(id),sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=a=>a[Math.floor(Math.random()*a.length)];
+const P=[{n:"Y’by",e:"💧",c:"#1d8fa8"},{n:"Ka’á",e:"🌿",c:"#4f9a2f"},{n:"Boitatá",e:"🔥",c:"#e8762c"},{n:"Curupira",e:"🍃",c:"#8a5cd0"}];
+const CC={"Vocabulário":"#3a9a3a","Gramática":"#1d7fb8","Phrasal verb":"#c8920c","False friend":"#c8443a","Missão":"#7a4fc0"};
+const Q=[
+["Vocabulário","“Lixo” em inglês é…",["garbage","garage","garden"],0],
+["Vocabulário","“Reutilizar” em inglês é…",["rescue","reuse","refuse"],1],
+["Vocabulário","“Plástico” em inglês é…",["plaster","plate","plastic"],2],
+["Vocabulário","“Floresta” em inglês é…",["forest","forecast","forgive"],0],
+["Gramática","He ___ like plastic.",["don’t","doesn’t","not"],1],
+["Gramática","We ___ the river yesterday.",["clean","cleans","cleaned"],2],
+["Gramática","There ___ a lot of trash here.",["is","are","be"],0],
+["Gramática","She is ___ than me.",["more tall","tallest","taller"],2],
+["Phrasal verb","“Clean up” significa…",["limpar","sujar","guardar"],0],
+["Phrasal verb","“Throw away” significa…",["pegar","jogar fora","guardar"],1],
+["Phrasal verb","“Turn off the light” é…",["acender a luz","trocar a luz","apagar a luz"],2],
+["Phrasal verb","“Run out of water” é…",["ficar sem água","correr na água","sair da água"],0],
+["False friend","“Pretend” significa…",["pretender","esperar","fingir"],2],
+["False friend","“Library” significa…",["livraria","biblioteca","livro"],1],
+["False friend","“Actually” significa…",["atualmente","ativamente","na verdade"],2],
+["False friend","“Parents” significa…",["pais","parentes","padrinhos"],0],
+["Missão","Missão reciclagem: o que dá para reciclar?",["a glass bottle","a dirty tissue","a broken plate"],0],
+["Missão","Corrija: “He don’t like plastic.”",["He not like plastic.","He doesn’t like plastic.","He don’t likes plastic."],1],
+["Missão","Complete: “Let’s ___ the beach.”",["clean in","clean on","clean up"],2],
+["Missão","Reduce, ___, recycle.",["reuse","return","remove"],0],
+["Vocabulário","“Água” em inglês é…",["waiter","water","winter"],1],
+["Vocabulário","“Árvore” em inglês é…",["tree","three","tray"],0],
+["Vocabulário","“Lata” em inglês é…",["can","cap","cat"],0],
+["Vocabulário","“Poluição” em inglês é…",["pollution","population","polish"],0],
+["Gramática","They ___ planting trees now.",["is","are","am"],1],
+["Gramática","I ___ plastic bags.",["don’t use","doesn’t use","not use"],0],
+["Gramática","How ___ bottles are there?",["much","many","few"],1],
+["Gramática","We ___ the beach tomorrow.",["cleaned","cleans","will clean"],2],
+["Phrasal verb","“Pick up” the trash significa…",["recolher","derrubar","esconder"],0],
+["Phrasal verb","“Cut down” trees significa…",["plantar","cortar","regar"],1],
+["Phrasal verb","“Give up” significa…",["desistir","dar um presente","levantar"],0],
+["Phrasal verb","“Look after” significa…",["procurar","cuidar de","olhar para trás"],1],
+["False friend","“Exit” significa…",["êxito","saída","exibir"],1],
+["False friend","“Attend” significa…",["atender","frequentar","tentar"],1],
+["False friend","“College” significa…",["colégio","faculdade","coleção"],1],
+["False friend","“Realize” significa…",["realizar","perceber","reclamar"],1],
+["Missão","Missão reciclagem: o que dá para reciclar?",["a greasy pizza box","a used napkin","an old newspaper"],2],
+["Missão","Diga em inglês: “reciclar”.",["recycle","recycler","reciclate"],0],
+["Missão","Corrija: “She have a bottle.”",["She has a bottle.","She haves a bottle.","She having a bottle."],0],
+["Missão","Corrija: “We is cleaning the river.”",["We am cleaning the river.","We are cleaning the river.","We be cleaning the river."],1],
+["Missão","Qual frase está certa com “clean up”?",["Let’s clean up the park.","Let’s clean at the park.","Let’s up clean the park."],0],
+["Missão","Qual frase está certa com “throw away”?",["Away throw the can.","Throw away to the can.","Throw the can away."],2],
+["Missão","“Turn off the tap” significa…",["fechar a torneira","ligar o rádio","abrir a porta"],0],
+["Missão","Complete: “Don’t ___ litter on the ground.”",["threw","throw","thrown"],1]];
+
+const BON=[["☀️ Salto +5","jump"],["🛡️ Escudo","shield"],["🌪️ Vento −3","wind"],["♻️ +1 vida","heal"]];
+const BAD=[["Vazamento de óleo: volta 3 casas","oil"],["Desmatamento: perde a próxima vez","def"],["Tempestade de plástico: todos voltam 1 casa","storm"],["Lixo tóxico: perde 1 vida e ganha 1 lixo","tox"]];
+const SP={6:"b",13:"b",21:"b",27:"b",9:"t",17:"t",24:"t"},W=360,H=500;
+const raw=t=>({x:180+125*Math.sin(t*Math.PI*3),y:405-t*300}),LUT=(()=>{let a=[],L=0,p=raw(0);for(let k=0;k<=600;k++){const q=raw(k/600);L+=Math.hypot(q.x-p.x,q.y-p.y);a.push([L,k/600]);p=q}return a})();
+const pt=t=>{const T=t*LUT[600][0];let lo=0,hi=600;while(hi-lo>1){const m=(lo+hi)>>1;if(LUT[m][0]<T)lo=m;else hi=m}const[a,ta]=LUT[lo],[b,tb]=LUT[hi];return raw(ta+(tb-ta)*((T-a)/((b-a)||1)))};
+const cell=n=>n==0?{x:180,y:438}:pt((n-1)/29);
+let S,N=2,last=-1;
+function pick(n){N=n;document.querySelectorAll(".num button").forEach(b=>b.classList.toggle("sel",+b.dataset.n==n));$("who").innerHTML=P.slice(0,n).map(p=>`<span style="--c:${p.c}">${p.e} ${p.n}</span>`).join("")}
+function home(){$("game").classList.add("hide");$("setup").classList.remove("hide")}
+function start(){
+ $("setup").classList.add("hide");$("game").classList.remove("hide");
+ S={t:0,busy:false,over:false,pl:P.slice(0,N).map(()=>({pos:0,poll:0,lives:3,cards:[],skip:false,shield:false}))};
+ const d="M"+Array.from({length:121},(_,k)=>{const p=pt(k/120);return p.x.toFixed(1)+","+p.y.toFixed(1)}).join("L");
+ let st="";for(let n=1;n<=30;n++){const c=cell(n),s=SP[n];st+=`<circle cx="${c.x}" cy="${c.y}" r="12.5" fill="${n==30?"#ffd34d":s=="b"?"#8fe36a":s=="t"?"#9a9aa6":"#f6f1e2"}" stroke="#0003"/><text x="${c.x}" y="${c.y+4}" text-anchor="middle" font-size="${s?11:9}" font-weight="700" fill="#10271f">${s=="b"?"🍃":s=="t"?"☁️":n}</text>`}
+ let tr="";for(let k=0;k<7;k++)tr+=`<text x="${k%2?340:20}" y="${150+k*38}" font-size="24" text-anchor="middle">🌲</text>`;
+ const ban=(x,y,w,c,t)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="22" rx="11" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y+16}" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">${t}</text>`;
+ $("bd").innerHTML=`<svg viewBox="0 0 ${W} ${H}"><ellipse cx="180" cy="10" rx="250" ry="112" fill="#b5e3f6"/><ellipse cx="180" cy="505" rx="250" ry="92" fill="#83cb5e"/>${tr}<path d="${d}" fill="none" stroke="#d9c79a" stroke-width="42" stroke-linejoin="round" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#1d8fa8" stroke-width="33" stroke-linejoin="round" stroke-linecap="round"/><path id="dirty" d="${d}" fill="none" stroke="#15151a" stroke-width="33" stroke-linejoin="round" stroke-linecap="round" opacity="0"/><path class="flow" d="${d}" fill="none" stroke="#fff7" stroke-width="2" stroke-dasharray="6 12"/><circle cx="180" cy="438" r="17" fill="#f6f1e2" stroke="#0003"/>${st}`+
+  `<text x="60" y="62" font-size="26">☁️</text><text x="300" y="56" font-size="26">☁️</text><text x="296" y="86" font-size="20">💧</text><text id="castle" x="180" y="82" text-anchor="middle" font-size="46">🏰</text>${ban(180,12,120,"#1d7fb8","AETHERIA")}`+
+  `<text x="104" y="468" text-anchor="middle" font-size="46">🏰</text>${ban(104,474,104,"#3f8a2a","FLORALIA")}<text x="256" y="470" font-size="26">🌳</text><text x="296" y="482" font-size="22">⛺</text></svg>`+
+  S.pl.map((_,i)=>`<div class="tk" id="tk${i}" style="--c:${P[i].c}"><u></u><i></i><span>${P[i].e}</span><b>${P[i].n}</b></div>`).join("");
+ S.pl.forEach((_,i)=>place(i));
+ $("ps").style.gridTemplateColumns=`repeat(${N==4?2:N},1fr)`;
+ msg("Bom jogo! Aperte <b>Responder pergunta</b> para começar.");ui();
+}
+function place(i){const c=cell(S.pl[i].pos),e=$("tk"+i);e.style.left=c.x/W*100+"%";e.style.top=c.y/H*100+"%";e.style.translate=`${i%2?11:-11}px ${i>1?7:-3}px`}
+function hopfx(i){const e=$("tk"+i);e.classList.remove("hop");void e.offsetWidth;e.classList.add("hop")}
+async function move(i,to){const p=S.pl[i];to=Math.max(0,Math.min(30,to));while(p.pos!=to){p.pos+=p.pos<to?1:-1;place(i);hopfx(i);await sleep(160)}}
+function msg(h){const l=$("log");l.innerHTML=h;l.style.animation="none";void l.offsetWidth;l.style.animation=""}
+function flash(i){const e=$("pc"+i);if(!e)return;e.classList.remove("hit");void e.offsetWidth;e.classList.add("hit")}
+function ui(){
+ const me=S.pl[S.t],p=P[S.t],dis=S.busy||S.over;
+ document.documentElement.style.setProperty("--c",p.c);
+ $("ps").innerHTML=S.pl.map((s,i)=>`<div class="pc ${i==S.t?"on":""}" id="pc${i}" style="--c:${P[i].c}"><div class="hd"><span class="av">${P[i].e}</span><div><b>${P[i].n}</b><small>casa ${s.pos}${s.shield?" 🛡️":""}${s.cards.length?" · 🎴"+s.cards.length:""}</small></div></div><small>Reino de ${P[i].n}</small><div class="sl">${[0,1,2,3,4].map(k=>`<i class="${k<s.poll?"p":""}">${k<s.poll?"🗑️":"🌱"}</i>`).join("")}</div>${"❤️".repeat(s.lives)}${"🖤".repeat(3-s.lives)}</div>`).join("");
+ $("turn").innerHTML=`${p.e} Vez de <b>${p.n}</b><small>Acertando, você escolhe: andar, poluir um rival ou limpar seu reino.${me.poll?` Seu reino tem ${me.poll} 🗑️: o dado anda ${me.poll} a menos.`:""}</small>`;
+ $("bPlay").disabled=dis;
+ $("hand").innerHTML=me.cards.length?"🎴 "+me.cards.map((c,k)=>`<button ${dis?"disabled":""} onclick="useCard(${k})">${BON[c][0]}</button>`).join(""):"<small style='color:var(--mut)'>Sem cartas. Acerte perguntas para ganhar.</small>";
+ const tot=Math.min(1,S.pl.reduce((a,s)=>a+s.poll,0)/(N*5)*1.7).toFixed(2);
+ const dr=$("dirty");if(dr)dr.setAttribute("opacity",tot);
+ const ca=$("castle");if(ca)ca.style.filter=`grayscale(${tot})`;
+ S.pl.forEach((_,i)=>$("tk"+i).classList.toggle("act",i==S.t));
+}
+async function roll(poll){
+ const f="⚀⚁⚂⚃⚄⚅",d=1+Math.floor(Math.random()*6),mv=Math.max(1,d-poll),el=$("die");
+ $("dice").classList.remove("hide");el.className="";$("dt").textContent="";
+ for(let k=0;k<11;k++){el.textContent=rnd([...f]);await sleep(80)}
+ el.textContent=f[d-1];el.className="rest";
+ $("dt").innerHTML=poll?`Dado ${d} − ${poll} 🗑️ = anda <b>${mv}</b>`:`Dado ${d}: anda <b>${mv}</b>`;
+ await sleep(1300);$("dice").classList.add("hide");return mv}
+function ask(){return new Promise(res=>{
+ const id=rnd(Q.map((_,i)=>i).filter(i=>i!=last));last=id;
+ const q=Q[id],o=q[2].map((t,i)=>[t,i==q[3]]).sort(()=>Math.random()-.5),d=$("dq");
+ d.className="";d.style.setProperty("--c",CC[q[0]]);
+ d.innerHTML=`<span class="cat">${q[0]}</span><p>${q[1]}</p>`+o.map((x,i)=>`<button class="opt" data-i="${i}">${"ABC"[i]}) ${x[0]}</button>`).join("");
+ d.querySelectorAll(".opt").forEach(b=>b.onclick=async()=>{
+  const ok=o[b.dataset.i][1];
+  d.querySelectorAll(".opt").forEach((x,i)=>{x.disabled=true;if(o[i][1])x.classList.add("ok")});
+  if(!ok){b.classList.add("no");d.className="err"}
+  await sleep(1100);d.close();res(ok)});
+ d.oncancel=e=>e.preventDefault();d.showModal()})}
+function reward(i){const me=S.pl[i];return new Promise(res=>{
+ const d=$("dq"),n=me.poll,b=[["run","🏃","Andar",n>=5?"Bloqueado: limpe seu reino antes":n?`Role o dado: ele anda ${n} a menos (mínimo 1)`:"Role o dado e ande",n>=5],["atk","💨","Poluir um rival","Coloque 1 🗑️ no reino de um rival",false],["cln","🧹","Limpar meu reino",n?"Tire 1 🗑️ do seu reino":"Seu reino já está limpo",!n]];
+ d.className="";d.style.setProperty("--c",P[i].c);
+ d.innerHTML=`<span class="cat">Acertou! 🎉</span><p>Escolha sua vantagem:</p>`+b.map(x=>`<button class="opt rw" data-k="${x[0]}" ${x[4]?"disabled":""}><em>${x[1]}</em><b>${x[2]}</b><small>${x[3]}</small></button>`).join("");
+ d.querySelectorAll(".rw").forEach(e=>e.onclick=()=>{d.close();res(e.dataset.k)});d.oncancel=ev=>ev.preventDefault();d.showModal()})}
+function target(){const r=S.pl.map((_,i)=>i).filter(i=>i!=S.t);if(r.length==1)return Promise.resolve(r[0]);
+ return new Promise(res=>{const d=$("dq");d.className="";d.innerHTML=`<span class="cat">Quem é o alvo?</span><br>`+r.map(i=>`<button class="opt" data-i="${i}" style="border-color:${P[i].c}">${P[i].e} ${P[i].n}</button>`).join("");
+ d.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{d.close();res(+b.dataset.i)});d.oncancel=e=>e.preventDefault();d.showModal()})}
+function hurt(i){const p=S.pl[i];p.lives--;if(p.lives<=0){p.lives=3;p.pos=0;place(i);return " Sem vidas: volta ao início!"}return ""}
+function gain(i){const p=S.pl[i];if(p.cards.length>=3)return "Mão cheia, sem carta nova.";const c=Math.floor(Math.random()*BON.length);p.cards.push(c);return `Ganhou ${BON[c][0]}!`}
+async function bad(i,k){const p=S.pl[i];
+ if(k=="oil")await move(i,p.pos-3);
+ if(k=="def")p.skip=true;
+ if(k=="storm")await Promise.all(S.pl.map((s,j)=>move(j,s.pos-1)));
+ if(k=="tox"){p.poll=Math.min(5,p.poll+1);hurt(i)}}
+async function land(i){const p=S.pl[i],s=SP[p.pos];
+ if(s=="b")msg("🍃 Pedra bônus! "+gain(i));
+ if(s=="t"){p.poll=Math.min(5,p.poll+1);msg("☁️ Pedra de fumaça! Seu reino ganhou 1 🗑️.");ui();flash(i)}
+ if(s){ui();await sleep(900)}}
+async function play(){
+ if(S.busy||S.over)return;S.busy=true;ui();
+ const i=S.t,me=S.pl[i];let m="";
+ if(await ask()){
+  const g=gain(i),k=await reward(i);
+  if(k=="run"){const mv=await roll(me.poll);msg(`🏃 ${P[i].n} anda ${mv}!`);await move(i,me.pos+mv);await land(i);m=`Acertou e andou ${mv}. ${g}`}
+  else if(k=="atk"){
+   const t=await target(),foe=S.pl[t];
+   if(foe.shield){foe.shield=false;m=`🛡️ O escudo de ${P[t].n} bloqueou o ataque! ${g}`}
+   else{foe.poll=Math.min(5,foe.poll+1);m=`💨 ${P[t].n} ganhou 1 🗑️ no reino. ${g}`;ui();flash(t)}
+  }else{me.poll--;m=`🧹 Missão cumprida! 1 🗑️ saiu do seu reino. ${g}`}
+ }else{
+  const b=rnd(BAD);m=`Errou! Volta 1 casa e perde 1 vida. ${b[0]}.`+hurt(i);await move(i,me.pos-1);await bad(i,b[1])
+ }
+ ui();await sleep(350);next(m);
+}
+async function useCard(k){
+ if(S.busy||S.over)return;S.busy=true;ui();
+ const i=S.t,me=S.pl[i],c=BON[me.cards[k]][1];me.cards.splice(k,1);
+ if(c=="jump"){msg("☀️ Salto Solar! Anda 5 casas.");await move(i,me.pos+5);await land(i)}
+ if(c=="shield"){me.shield=true;msg("🛡️ Escudo ativo: o próximo ataque será bloqueado.")}
+ if(c=="wind"){const t=await target();msg(`🌪️ Vento forte! ${P[t].n} volta 3 casas.`);await move(t,S.pl[t].pos-3)}
+ if(c=="heal"){me.lives=Math.min(3,me.lives+1);msg("♻️ +1 vida do planeta!")}
+ S.busy=false;ui();win(i)}
+function win(i){
+ const p=S.pl[i];if(p.pos<30||p.poll>3||S.over)return false;
+ S.over=true;ui();confetti();
+ const d=$("dq");d.className="";d.style.setProperty("--c",P[i].c);
+ d.innerHTML=`<span class="cat">${P[i].e} ${P[i].n} venceu!</span><p><b>CLEAN UP!</b> O castelo foi despoluído e a maldição acabou. Water and Forest were never enemies. They were family.</p><button class="big" onclick="$('dq').close();start()">Jogar de novo</button>`;
+ d.oncancel=null;d.showModal();return true}
+function next(m){
+ if(win(S.t))return;
+ if(S.pl[S.t].pos>=30&&S.pl[S.t].poll>3)m+=" Chegou ao castelo, mas precisa limpar o reino para vencer!";
+ let k=S.t,x="";
+ for(let s=0;s<N;s++){k=(k+1)%N;if(S.pl[k].skip){S.pl[k].skip=false;x+=` ${P[k].n} perde a vez.`;continue}break}
+ S.t=k;S.busy=false;msg(m+x+` Agora é ${P[k].e} <b>${P[k].n}</b>.`);ui()}
+function confetti(){
+ const c=$("cf"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;c.classList.remove("hide");
+ const a=Array.from({length:130},()=>({x:Math.random()*c.width,y:-Math.random()*c.height/2,v:2+Math.random()*4,r:4+Math.random()*5,h:Math.random()*360,s:Math.random()*2-1}));
+ let f=0;(function L(){x.clearRect(0,0,c.width,c.height);a.forEach(p=>{p.y+=p.v;p.x+=p.s;x.fillStyle=`hsl(${p.h},80%,55%)`;x.fillRect(p.x,p.y,p.r,p.r*1.6)});if(++f<280)requestAnimationFrame(L);else c.classList.add("hide")})()}
+pick(2);
+</script>
+</body>
+</html>
